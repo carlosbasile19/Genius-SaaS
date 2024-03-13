@@ -16,11 +16,10 @@ import { useState } from "react";
 import { Empty } from "@/components/Empty";
 import { Loader } from "@/components/loader";
 import { cn } from "@/lib/utils";
-
-
-
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const VideoPage = () => {
+    const proModal = useProModal();
     const router = useRouter();
     const [video, setVideo] = useState<string>('');
     const form = useForm<z.infer<typeof formSchema>>(
@@ -43,7 +42,9 @@ const VideoPage = () => {
           
           form.reset();
         } catch (error: any) {
-          
+            if(error?.response?.status === 403){
+                proModal.onOpen();
+           } 
         } finally {
           router.refresh();
         }
