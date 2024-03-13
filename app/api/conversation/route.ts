@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 const openai = new OpenAI();
+import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
 
 
 export async function POST(
@@ -18,10 +19,17 @@ export async function POST(
         if(!messages)
             return new NextResponse("Message is required", {status: 400})
 
+        const freeTrial = await checkApiLimit();
+
+        if (!freeTrial)
+            return new NextResponse("You have reached the free limit", {status: 403})
+
         const response = await openai.chat.completions.create({
             messages,
             model: "gpt-3.5-turbo",
           });
+
+        await increaseApiLimit();
 
         return NextResponse.json(response.choices[0].message)
 
