@@ -6,6 +6,7 @@ import { Download, ImageIcon, MessageSquare } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 import { amountOptions, formSchema, resolutionOptions } from "./constants";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
@@ -50,7 +51,8 @@ const ImagePage = () => {
         } catch (error: any) {
             if(error?.response?.status === 403){
                 proModal.onOpen();
-           }
+           }else
+                toast.error("Something went wrong.");
         } finally {
           router.refresh();
         }

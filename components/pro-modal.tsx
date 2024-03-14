@@ -8,6 +8,7 @@ import { Card } from "./ui/card";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 import { useState } from "react";
 
 const tools = [
@@ -60,7 +61,7 @@ export const ProModal = () => {
     
           window.location.href = response.data.url;
         } catch (error) {
-           console.error("Something went wrong");
+           toast.error("Something went wrong");
         } finally {
           setLoading(false);
         }
@@ -102,6 +103,7 @@ export const ProModal = () => {
                 </DialogHeader>
                 <DialogFooter>
                         <Button
+                         disabled = {loading}
                          onClick={onSubscribe}
                          size="lg"
                          variant="premium"

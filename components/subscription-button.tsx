@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Zap } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import toast from "react-hot-toast";
 
 export const SubscriptionButton = ({
   isPro = false
@@ -21,7 +22,7 @@ export const SubscriptionButton = ({
 
       window.location.href = response.data.url;
     } catch (error) {
-      console.error("Something went wrong");
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }

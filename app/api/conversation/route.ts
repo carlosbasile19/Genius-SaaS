@@ -20,8 +20,8 @@ export async function POST(
         if(!messages)
             return new NextResponse("Message is required", {status: 400})
 
-        const freeTrial = await checkApiLimit();
-        const isPro = await checkSubscription();
+            const freeTrial = await checkApiLimit();
+            const isPro = await checkSubscription();
 
         if (!freeTrial && !isPro)
             return new NextResponse("You have reached the free limit", {status: 403})

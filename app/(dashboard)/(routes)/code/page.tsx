@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
+import { toast } from "react-hot-toast";
 
 import { formSchema } from "./constants";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
@@ -54,7 +55,8 @@ const CodePage = () => {
         } catch (error: any) {
             if(error?.response?.status === 403){
                 proModal.onOpen();
-           }
+           }else
+              toast.error("Something went wrong.");
         } finally {
           router.refresh();
         }
